@@ -2,4 +2,6 @@
   (version 7)
   (lib (name "5227161-1")(type "KiCad")(uri "/Users/hemalarora/Library/CloudStorage/GoogleDrive-hemal1@stanford.edu/My Drive/Year 1/Summer Research/REU/MRI-CWRadar/ul_5227161-1/KiCADv6/footprints.pretty")(options "")(descr "BNC Female Port (Right Angle, Through Hole)"))
   (lib (name "73099")(type "KiCad")(uri "/Users/hemalarora/Library/CloudStorage/GoogleDrive-hemal1@stanford.edu/My Drive/Year 1/Summer Research/REU/MRI-CWRadar/ul_73099-0/KiCADv6/footprints.pretty")(options "")(descr "Banana Jack Plug (Black)"))
+  (lib (name "CONSMA002")(type "KiCad")(uri "/Users/hemalarora/Library/CloudStorage/GoogleDrive-hemal1@stanford.edu/My Drive/Year 1/Summer Research/REU/MRI-CWRadar/Symbol libraries/ul_CONSMA002/KiCADv6/footprints.pretty")(options "")(descr ""))
+  (lib (name "SMACON")(type "KiCad")(uri "/Users/hemalarora/Library/CloudStorage/GoogleDrive-hemal1@stanford.edu/My Drive/Year 1/Summer Research/REU/MRI-CWRadar/KiCADv6 2/footprints.pretty")(options "")(descr ""))
 )

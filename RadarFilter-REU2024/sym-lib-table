@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "5227161-1")(type "KiCad")(uri "/Users/hemalarora/Library/CloudStorage/GoogleDrive-hemal1@stanford.edu/My Drive/Year 1/Summer Research/REU/MRI-CWRadar/ul_5227161-1/KiCADv6/2024-07-11_00-53-52.kicad_sym")(options "")(descr "BNC Connector (Female, Right Angle, Through Hole)"))
+  (lib (name "73099-0")(type "KiCad")(uri "/Users/hemalarora/Library/CloudStorage/GoogleDrive-hemal1@stanford.edu/My Drive/Year 1/Summer Research/REU/MRI-CWRadar/ul_73099-0/KiCADv6/2024-07-11_09-42-28.kicad_sym")(options "")(descr "Banana Jack Plug (Black)"))
+)

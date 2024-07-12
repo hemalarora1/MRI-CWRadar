@@ -34,9 +34,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.762,
-          "height": 1.524,
-          "width": 1.524
+          "drill": 1.2954,
+          "height": 1.8034,
+          "width": 1.8034
         },
         "silk_line_width": 0.15,
         "silk_text_italic": false,
@@ -424,14 +424,14 @@
       "1Q": "signal",
       "2I": "signal",
       "2Q": "signal",
-      "BNC1I": "signal",
-      "BNC1Q": "signal",
-      "BNC2I": "signal",
-      "BNC2Q": "signal",
       "Net-(U5A--)": "signal",
       "Net-(U5B--)": "signal",
       "Net-(U6A--)": "signal",
-      "Net-(U6B--)": "signal"
+      "Net-(U6B--)": "signal",
+      "SMA1I": "signal",
+      "SMA1Q": "signal",
+      "SMA2I": "signal",
+      "SMA2Q": "signal"
     },
     "netclass_patterns": []
   },

@@ -1489,10 +1489,6 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid cd2e4938-4746-400d-a1ac-26a2b950394e)
   )
-  (text "Bypass caps for radar?" (at 166.37 140.97 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid eb8f1bf9-4886-42cd-a28d-cdf341b0388b)
-  )
 
   (label "V+" (at 38.1 151.13 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right bottom))

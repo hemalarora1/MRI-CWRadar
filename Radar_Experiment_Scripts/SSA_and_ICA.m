@@ -6,33 +6,33 @@
 % Script expects data_filepath, I1, I2, Q1, Q2, Radar1, Radar2
 % variables to be set in the workspace (from python file).
 % If manual inputs are needed:
-% data_filepath = "Data/081024/<experiment_name>/<experiment_name>.csv";
+data_filepath = "Data/080724/MC_frbr1/MC_frbr1.csv";
  
-% choice = 1;
+choice = 2;
 
-% if (choice == 1)
-%     % Neck
-%     I1 = 4;
-%     Q1 = 5;
-%     Radar1 = "Left Neck";
-%     I2 = 6;
-%     Q2 = 7;
-%     Radar2 = "Right Neck";
-%     ECG = 2;
-%     PPG = 3;
-%     position = "Neck";
-% else
-%     % Chest
-%     I1 = 8;
-%     Q1 = 9;
-%     Radar1 = "Left Chest";
-%     I2 = 10;
-%     Q2 = 11;
-%     Radar2 = "Right Chest";
-%     ECG = 2;
-%     PPG = 3;
-%     position = "Chest";
-% end
+if (choice == 1)
+    % Neck
+    I1 = 4;
+    Q1 = 5;
+    Radar1 = "Left Neck";
+    I2 = 6;
+    Q2 = 7;
+    Radar2 = "Right Neck";
+    ECG = 2;
+    PPG = 3;
+    position = "Neck";
+else
+    % Chest
+    I1 = 8;
+    Q1 = 9;
+    Radar1 = "Left Chest";
+    I2 = 10;
+    Q2 = 11;
+    Radar2 = "Right Chest";
+    ECG = 2;
+    PPG = 3;
+    position = "Chest";
+end
 
 data = readmatrix(data_filepath, 'NumHeaderLines', 1);  % Ignore the header line
 tt = data(:, 1) ;
@@ -73,11 +73,11 @@ N = length(XXa);
 M = round(N/4);  % just window size
 
 % perform SSA on data to clean it up
-[RCa, LAMBDA] = compSSA(XXa, 4, 1, saveDir, Radar1);
-[RCb, LAMBDA] = compSSA(XXb, 4, 1, saveDir, Radar2);
+[RCa, LAMBDA] = compSSA(XXa, 4, 0, saveDir, Radar1);
+[RCb, LAMBDA] = compSSA(XXb, 4, 0, saveDir, Radar2);
 % reconstructs data from components 2 through 20
-Arec = reconSSA(RCa, 2, 20, 1, saveDir, Radar1);
-Brec = reconSSA(RCb, 2, 20, 1, saveDir, Radar2);
+Arec = reconSSA(RCa, 3, 20, 0, saveDir, Radar1);
+Brec = reconSSA(RCb, 3, 20, 0, saveDir, Radar2);
 
 % do PCA + rotation on cleaned up SSA data
 dat_a = Arec;
@@ -158,8 +158,40 @@ Ix = real(XX); Qx = imag(XX);
 N = length(XX);
 M = round(N/4);  % just window size
 
-% SAVE SSA DATA
+figure(9);
+set(gcf,'name','Time series versus ECG Data');
+clf;
 
+% PLOT SSA Result Against ECG baseline
+% Push ecg line below other signals
+% Calculate the minimum values of the signals
+ecg = (0.3/(max(Qx) - min(Qx))) * Qx;
+max_ecg = max(ecg);
+min_left = min(dprin_a(:, 2));
+min_right = min(dprin_b(:, 2));
+
+% Find the minimum of the left and right neck/chest signals
+min_other_signals = min(min_left, min_right);
+
+% Calculate the offset needed to make the ECG signal maximum below the other signals' minimum
+offset = max_ecg - min_other_signals;  % The constant can be adjusted
+
+% Apply the offset to the ECG signal
+adjusted_ecg = ecg - offset;
+
+if(0)
+plot(adjusted_ecg, 'g');
+hold on;
+%plot(-dprin_a(:, 2),'b'); % for chest - set a
+plot(dprin_a(:, 2),'b');  % for neck -setb
+plot(dprin_b(:, 2),'r');
+hold off;
+legend('ECG', Radar1, Radar2);
+saveas(gcf, fullfile(saveDir, sprintf('final_plotGS_timeseriesvsECG_%s.png', position)));
+end
+
+% SAVE SSA DATA
+if(0)
 % Define the column headers
 headers = {'sample number', 'ECG', 'PPG', 'Left_Radar', 'Right_Radar'};
 
@@ -176,7 +208,7 @@ fclose(fid);
 samples = (0:size(Qx, 1) - 1)';
 post_SSA_data = [samples, Qx, Ix, dprin_a(:, 2), dprin_b(:,2)];
 writematrix(post_SSA_data, csv_name, 'WriteMode', 'append');
-
+end
 % -------------------------------------------------------------------------
 % FASTICA/RICA START
 % -------------------------------------------------------------------------
@@ -210,7 +242,7 @@ rica_model = rica(wdat, 2, 'NonGaussianityIndicator', nonGaussianityIndicator);
 rica_radars = transform(rica_model, wdat);
 fica_radars_prewhiten = fastica(wdat'); fica_radars_prewhiten = fica_radars_prewhiten';
 
-
+if(0)
 figure(1);
 set(gcf, 'Position', [100, 100, 1400, 1000]);  % [left, bottom, width, height]
 
@@ -239,3 +271,4 @@ plot(Qx);
 title("ECG");
 legend("ECG")
 saveas(gcf, fullfile(saveDir, sprintf('RICA_FASTICA_vs_ECG_%s.png', position)));
+end

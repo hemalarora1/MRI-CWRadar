@@ -6,7 +6,9 @@
 % Script expects data_filepath, I1, I2, Q1, Q2, Radar1, Radar2
 % variables to be set in the workspace (from python file).
 % If manual inputs are needed:
-data_filepath = "Data/080724/MC_brh1/MC_brh1.csv";
+
+% data_filepath = "Data/080724/MC_frbr9_vary_RCs/MC_frbr9.csv";
+data_filepath = "Data/080724/MC_frbr10_vary_RCs/MC_frbr10.csv";
  
 choice = 2;
 
@@ -21,6 +23,8 @@ if (choice == 1)
     ECG = 2;
     PPG = 3;
     position = "Neck";
+    RC1 = 2;
+    RC2 = 20;
 else
     % Chest
     I1 = 8;
@@ -32,6 +36,8 @@ else
     ECG = 2;
     PPG = 3;
     position = "Chest";
+    RC1 = 2;
+    RC2 = 20;
 end
 
 data = readmatrix(data_filepath, 'NumHeaderLines', 1);  % Ignore the header line
@@ -76,8 +82,8 @@ M = round(N/4);  % just window size
 [RCa, LAMBDA] = compSSA(XXa, 4, 1, saveDir, Radar1);
 [RCb, LAMBDA] = compSSA(XXb, 4, 1, saveDir, Radar2);
 % reconstructs data from components 2 through 20
-Arec = reconSSA(RCa, 2, 20, 1, saveDir, Radar1);
-Brec = reconSSA(RCb, 2, 20, 1, saveDir, Radar2);
+Arec = reconSSA(RCa, RC1, RC2, 1, saveDir, Radar1);
+Brec = reconSSA(RCb, RC1, RC2, 1, saveDir, Radar2);
 
 % do PCA + rotation on cleaned up SSA data
 dat_a = Arec;
@@ -187,7 +193,7 @@ plot(dprin_a(:, 2),'b');  % for neck -setb
 plot(dprin_b(:, 2),'r');
 hold off;
 legend('ECG', Radar1, Radar2);
-saveas(gcf, fullfile(saveDir, sprintf('final_plotGS_timeseriesvsECG_%s.png', position)));
+saveas(gcf, fullfile(saveDir, sprintf('final_plotGS_timeseriesvsECG_RCs%d-%d_%s.png', RC1, RC2, position)));
 end
 
 % SAVE SSA DATA
@@ -196,7 +202,7 @@ if(1)
 headers = {'sample number', 'ECG', 'PPG', 'Left_Radar', 'Right_Radar'};
 
 % Specify the filename and path
-csv_name = sprintf("%s/POST_SSA_Data_%s.csv", saveDir, position);
+csv_name = sprintf("%s/POST_SSA_Data_RCs%d-%d_%s.csv", saveDir, RC1, RC2, position);
 
 % Write the headers and then append the data
 fid = fopen(csv_name, 'w');  % Open file for writing
@@ -270,11 +276,11 @@ subplot(5,1,5);
 plot(Qx);
 title("ECG");
 legend("ECG")
-saveas(gcf, fullfile(saveDir, sprintf('RICA_FASTICA_vs_ECG_%s.png', position)));
+saveas(gcf, fullfile(saveDir, sprintf('RICA_FASTICA_vs_ECG_RCs%d-%d_%s.png', RC1, RC2, position)));
 end
 
 % Define the filename with the position variable
-csv_name_ica = sprintf("%s/POST_ICA_DATA_%s.csv", saveDir, position);
+csv_name_ica = sprintf("%s/POST_ICA_DATA_RCs%d-%d_%s.csv", saveDir, RC1, RC2, position);
 
 % Define column headers for the FastICA data
 headers_ica = {'sample_number', 'IC1_RICA', 'IC2_RICA', 'IC1_FASTICA', 'IC2_FASTICA', 'IC1_FASTICA_PREWHITENED', 'IC2_FASTICA_PREWHITENED'};

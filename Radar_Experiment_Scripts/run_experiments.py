@@ -49,7 +49,7 @@ NUM_SAMPLES = RECORD_LENGTH * SAMPLING_FREQUENCY
 CHANNEL_RANGE = 5.0 # +/- 5V input range
 V_PLUS = 5.0 # +5V Supply
 V_MINUS = -5.0 # -5V Supply
-CURRENT_LIMIT = 0.4 # 10 mA to 3A range availablecs
+CURRENT_LIMIT = 0.5 # 10 mA to 3A range available
 TRIGGER_DELAY = 0.003 # 3 ms trigger delay to AD2 (empirically observed this delay during tests)
 MATLAB_PROCESSING_SCRIPT = "SSA_and_ICA" # ensure matlab script is in current directory
 

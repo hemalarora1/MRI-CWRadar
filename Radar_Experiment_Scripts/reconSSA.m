@@ -27,7 +27,7 @@ legend('Original','Reconstruction with RCs');
 subplot(2,1,2)
 plot(t,imag(Xo),'b-',t,imag(sum(RC(:,NS:NP),2)),'r-');
 legend('Original','Reconstruction with RCs');
-saveas(gcf, fullfile(saveDir, sprintf('reconSSA_timeseriesX_reconstructionRCs_%s.png', position)));
+saveas(gcf, fullfile(saveDir, sprintf('reconSSA_timeseriesX_reconstructionRCs_%d-%d_%s.png', NS, NP, position)));
 end
 
 end

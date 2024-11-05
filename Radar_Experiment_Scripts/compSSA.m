@@ -104,7 +104,7 @@ clf;
 semilogy(LAMBDA,'o-');
 saveas(gcf, fullfile(saveDir, sprintf('eigenvalues_lambda_%s.png', position)));
 
-  if(1)
+  if(0)
     figure(4);
     set(gcf,'name','Principal components PCs')
     clf;
